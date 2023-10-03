@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grpc-client-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: grpc-client
+  template:
+    metadata:
+      labels:
+        app: grpc-client
+    spec:
+      containers:
+      - name: grpc-client
+        image: rahulcloud/grpc-client:v1
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+        env:
+        - name: GRPC_SERVER_ADDRESS
+          value: "grpc-server-service:30043"
